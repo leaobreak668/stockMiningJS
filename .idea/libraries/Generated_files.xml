@@ -2,15 +2,30 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/dist/StockPrice.js" />
-        <item url="file://$PROJECT_DIR$/dist/StockPrices.js" />
-        <item url="file://$PROJECT_DIR$/dist/noname.js" />
+        <item url="file://$PROJECT_DIR$/dist/MakeMoney.js" />
+        <item url="file://$PROJECT_DIR$/dist/mm.js" />
+        <item url="file://$PROJECT_DIR$/dist/MakeStock.js" />
+        <item url="file://$PROJECT_DIR$/dist/Mining.js" />
+        <item url="file://$PROJECT_DIR$/dist/initData.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/dist/StockPrice.js" />
       <root url="file://$PROJECT_DIR$/dist/StockPrices.js" />
+      <root url="file://$PROJECT_DIR$/dist/hello-world-server.js" />
+      <root url="file://$PROJECT_DIR$/dist/Order.js" />
       <root url="file://$PROJECT_DIR$/dist/noname.js" />
+      <root url="file://$PROJECT_DIR$/dist/StockPrice.js" />
+      <root url="file://$PROJECT_DIR$/dist/StockPrices.js" />
+      <root url="file://$PROJECT_DIR$/dist/hello-world-server.js" />
+      <root url="file://$PROJECT_DIR$/dist/Order.js" />
+      <root url="file://$PROJECT_DIR$/dist/noname.js" />
+      <root url="file://$PROJECT_DIR$/dist/mm.js" />
+      <root url="file://$PROJECT_DIR$/dist/MakeMoney.js" />
+      <root url="file://$PROJECT_DIR$/dist/mm.js" />
+      <root url="file://$PROJECT_DIR$/dist/MakeStock.js" />
+      <root url="file://$PROJECT_DIR$/dist/Mining.js" />
+      <root url="file://$PROJECT_DIR$/dist/initData.js" />
     </CLASSES>
     <SOURCES />
   </library>

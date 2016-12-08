@@ -6,11 +6,11 @@ class Order {
     }
 
     getAmt() {
-        return 100 * this.qty * this.price / 100;
+        return (this.qty * this.price).toFixed(2);
     }
 
     getCurAmt(price) {
-        return 100 * this.qty * price / 100;
+        return (this.qty * price).toFixed(2);
     }
 }
 exports.Order = Order;

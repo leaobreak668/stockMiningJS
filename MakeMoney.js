@@ -1,26 +1,7 @@
 /**
  * Created by mvliao on 2016/12/7.
  */
-var MongoClient = require('mongodb').MongoClient;
-var DB_CONN_STR = 'mongodb://127.0.0.1:27017/nodedb';
 var Order = require("./Order");
-//
-var queryData = function (db, callback) {
-    // 连接到表
-    var collection = db.collection('PRICE000783');
-    // 查询数据
-    var whereStr = {};
-    // var pattern = new RegExp("^" + '2016-08-0' + ".*$");
-    collection.find(whereStr).sort({
-        "times": 1
-    }).toArray(function (err, result) {
-        if (err) {
-            console.log('Error:' + err);
-            return;
-        }
-        callback(result);
-    });
-}
 //
 var initAmt = 100000.0;//初始金额
 var totalFundAmt = initAmt; //可用资金额
@@ -36,6 +17,10 @@ var layer = 3;
 var maxPrice = 0;
 var minPrice = 0;
 var stockList = [];
+//
+var add = function (x, y) {
+    return Number(x) + Number(y);
+}
 //
 var makeMoney = function (lists) {
     for (var dayItem in lists) {
@@ -63,7 +48,7 @@ var makeMoney = function (lists) {
     for (var idx in stockList) {
         var item = stockList[idx];
         console.log("Hold.." + item.times + " # " + item.qty + " # " + item.price + " # " + item.getAmt());
-        totalAmt = totalAmt + item.getCurAmt(latestPrice);
+        totalAmt = add(totalAmt, item.getCurAmt(latestPrice));
     }
     console.log("totalFundAmt: " + totalFundAmt);
     console.log("totalAmt    : " + totalAmt);
@@ -76,13 +61,13 @@ var saleOrder = function (times, currentPrice) {
         console.log("...sale.." + times + " # " + currentPrice);
         //
         var item = stockList.shift();
-        totalFundAmt = totalFundAmt + item.getCurAmt(currentPrice);
+        totalFundAmt = add(totalFundAmt, item.getCurAmt(currentPrice));
         totalUsedAmt = totalUsedAmt - item.getCurAmt(currentPrice);
         item = stockList.shift();
-        totalFundAmt = totalFundAmt + item.getCurAmt(currentPrice);
+        totalFundAmt = add(totalFundAmt, item.getCurAmt(currentPrice));
         totalUsedAmt = totalUsedAmt - item.getCurAmt(currentPrice);
         item = stockList.shift();
-        totalFundAmt = totalFundAmt + item.getCurAmt(currentPrice);
+        totalFundAmt = add(totalFundAmt, item.getCurAmt(currentPrice));
         totalUsedAmt = totalUsedAmt - item.getCurAmt(currentPrice);
         if (stockList.length == 0) {
             maxPrice = 0;
@@ -121,15 +106,17 @@ var buyMinOrder = function (times, price) {
     }
     var fallMax = fallPercentFromMax(minPrice);
     if (fallMax < (fallRate * (stockList.length - 1))) {
-        // return;
+        return;
     }
     //
-    qty = qty * stockList.length * 0.5; //这句很关键
+    if (stockList.length > 1) {
+        qty = qty * (stockList.length + 1) * 0.5; //这句很关键
+    }
     console.log("buy min.." + times + " # " + price);
     var order = new Order.Order(times, price, qty);
     stockList.unshift(order);
     totalFundAmt = totalFundAmt - order.getAmt();
-    totalUsedAmt = totalUsedAmt + order.getAmt();
+    totalUsedAmt = add(totalUsedAmt, order.getAmt());
     minPrice = price;
     //
     if (totalMaxUsedAmt < totalUsedAmt) {
@@ -147,7 +134,7 @@ var buyMaxOrder = function (times, price) {
     var order = new Order.Order(times, price, qty);
     stockList.push(order);
     totalFundAmt = totalFundAmt - order.getAmt();
-    totalUsedAmt = totalUsedAmt + order.getAmt();
+    totalUsedAmt = add(totalUsedAmt, order.getAmt());
     maxPrice = price;
     //
     if (totalMaxUsedAmt < totalUsedAmt) {
@@ -166,15 +153,4 @@ var getQtyByPrice = function (price) {
     }
     return qty;
 }
-//
-var make = function () {
-    MongoClient.connect(DB_CONN_STR, function (err, db) {
-        console.log("连接成功！");
-        queryData(db, function (result) {
-            db.close();
-            makeMoney(result);
-        });
-    });
-};
-
-make();
+exports.make = makeMoney;
