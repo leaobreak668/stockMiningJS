@@ -1,0 +1,25 @@
+{
+  "name": "stockMining",
+  "version": "0.1.0",
+  "description": "stockMining",
+  "main": "hello-world-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
+  },
+  "dependencies": {
+	  "node-xlrd": "0.2.4",	  
+	    "mongodb": "*",	  
+	    "csv": "*",
+	    "line-reader" : "*",
+        "mysql":"latest"
+	  },
+  "repository": "",
+  "keywords": [
+    "node.js",
+    "eclipse",
+    "nodeclipse"
+  ],
+  "author": "",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
