@@ -4,8 +4,8 @@
 var MongoClient = require('mongodb').MongoClient;
 var MakeMoney = require('./MakeMoney');
 //
-//var DB_CONN_STR = 'mongodb://127.0.0.1:27017/nodedb';
-var DB_CONN_STR = 'mongodb://172.16.9.65:27017/nodedb';
+var DB_CONN_STR = 'mongodb://127.0.0.1:27017/nodedb';
+//var DB_CONN_STR = 'mongodb://172.16.9.65:27017/nodedb';
 //
 (function () {
     MongoClient.connect(DB_CONN_STR, function (err, db) {
