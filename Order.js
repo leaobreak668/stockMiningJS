@@ -6,6 +6,10 @@ class Order {
         this.qty = qty;
     }
 
+    canSale(salePrice) {
+        return salePrice > (this.price * 1.2);
+    }
+
     calDays(d1, d2) {
         d1 = new Date(d1);
         d2 = d2 === undefined ? new Date() : new Date(d2);
@@ -32,8 +36,12 @@ class Order {
         }
         var saleAmt = this.getCurAmt(price);
         var buyAmt = this.getAmt();
-        var days = this.calDays(this.times, this.saleTimes);
-        return (((saleAmt - buyAmt) * days / buyAmt) / 365).toFixed(2);
+        var days = this.calDays(this.times, this.saleTimes)
+        var yearRate = (((saleAmt - buyAmt) / buyAmt) * days / 365).toFixed(2);
+        if (yearRate < 0) {
+            console.log("yearRate:   ==" + yearRate);
+        }
+        return yearRate;
     }
 }
 exports.Order = Order;

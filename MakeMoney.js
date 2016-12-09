@@ -17,6 +17,7 @@ var layer = 3;
 var maxPrice = 0;
 var minPrice = 0;
 var stockList = [];
+var yearRates = [];
 //
 var avgYearRate = 0.0;
 var saleTimes = 0;
@@ -56,11 +57,7 @@ var makeMoney = function (lists) {
         var item = stockList[idx];
         console.log("Hold.." + item.times + " # " + item.qty + " # " + item.price + " # " + item.getAmt());
         totalAmt = add(totalAmt, item.getCurAmt(latestPrice));
-        //
-        avgYearRate = add(avgYearRate, item.getYearRate(latestPrice));
-        if (saleTimes > 0) {
-            avgYearRate = (avgYearRate / 2).toFixed(2)
-        }
+        yearRates.push(item.getYearRate(latestPrice));
     }
     console.log("totalFundAmt: " + totalFundAmt);
     console.log("totalAmt    : " + totalAmt);
@@ -76,29 +73,22 @@ var saleOrder = function (times, currentPrice) {
         var item = stockList.shift();
         totalFundAmt = add(totalFundAmt, item.saleAmt(currentPrice));
         totalUsedAmt = totalUsedAmt - item.getCurAmt(currentPrice);
-        avgYearRate = add(avgYearRate, item.getYearRate());
-        console.log("avgYearRate2222222: " + item.getYearRate());
+        yearRates.push(item.getYearRate(currentPrice));
         //
         item = stockList.shift();
         totalFundAmt = add(totalFundAmt, item.saleAmt(currentPrice));
         totalUsedAmt = totalUsedAmt - item.getCurAmt(currentPrice);
-        avgYearRate = add(avgYearRate, item.getYearRate());
+        yearRates.push(item.getYearRate(currentPrice));
         //
         item = stockList.shift();
         totalFundAmt = add(totalFundAmt, item.saleAmt(currentPrice));
         totalUsedAmt = totalUsedAmt - item.getCurAmt(currentPrice);
-        avgYearRate = add(avgYearRate, item.getYearRate());
+        yearRates.push(item.getYearRate(currentPrice));
         if (stockList.length == 0) {
             maxPrice = 0;
             minPrice = 0;
         } else {
             minPrice = stockList[0].price;
-        }
-        //
-        if (saleTimes == 0) {
-            avgYearRate = (avgYearRate / 3).toFixed(2)
-        } else {
-            avgYearRate = (avgYearRate / 4).toFixed(2)
         }
     }
 }
