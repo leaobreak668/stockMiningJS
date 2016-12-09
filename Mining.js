@@ -15,7 +15,7 @@ var DB_CONN_STR = 'mongodb://127.0.0.1:27017/nodedb';
             "times": 1
         }).toArray(function (err, result) {
             if (err) {
-                console.log('Error:' + err);
+                console.log('Errors:' + err);
                 return;
             }
             db.close();
